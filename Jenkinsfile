@@ -9,39 +9,27 @@ pipeline {
 
     stages {
         stage("Build and Test") {
-
-            step {
-                stages {
-                    stage("Clone") {
-                        step {
-                            sh "echo cloning repo" 
-                            sh "git pull origin jenkins-pipeline-peqch-only"
-                        }
-                    }
-                    // stage("Build") {
-
-                    // }
-                    // stage("Test") {
-
-                    // }
-                    // stage("Deliver") {
-
-                    // }
-                }
+            steps {
+                sh "echo cloning repo"
+                sh "git pull origin jenkins-pipeline-peqch-only" 
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "echo Build" 
             }
         }
 
-        // stage("Deploy") {
-        //     stage("Build") {
+        stage("Test") {
+            steps {
+                sh "echo Test" 
+            }
+        }
 
-        //     }
-        //     stage("Build") {
-
-        //     }
-        //     stage("Test") {
-
-        //     }
-        // }
+        stage("Deliver") {
+            steps {
+                sh "echo Deliver" 
+            }
+        }
     }
-
 }
