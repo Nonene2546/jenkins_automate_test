@@ -14,6 +14,7 @@ pipeline {
                 step {
                     sh "echo cloning repo" 
                     sh "git remote -v"
+                    sh "robot --version"
                 }
             }
             // stage("Build") {
