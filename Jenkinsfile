@@ -1,24 +1,22 @@
 pipeline {
     agent { label 'build-agent' }
     environment {
-        APP_NAME = "SDPX"
-        DOCKER_REGISTRY = "" //any registry or build own?
-        GIT_REPO_URL = "https://github.com/CE-RELATIONSHIP/jenkins-assignment.git"
-        BRANCH = "jenkins-pipeline-peqch-only"
-        APP = "app.py"
-        UNIT_TEST = "unit_test.py"
+        IMAGE_NAME = "spdx:${env.BUILD_NUMBER}"
     }
 
     stages {
         stage("Build") {
             steps {
                 sh "echo Build"
+                sh "docker build --tag ${IMAGE_NAME} ."
+                sh "docker image ls"
             }
         }
 
         stage("Test"){
             steps {
                 sh "echo Test"
+                sh "docker rmi ${IMAGE_NAME}"
             }
         }
 
