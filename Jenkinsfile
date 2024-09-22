@@ -13,7 +13,7 @@ pipeline {
             stage("Clone") {
                 step {
                     sh "echo cloning repo" 
-                    sh "git git remote -v"
+                    sh "git remote -v"
                 }
             }
             // stage("Build") {
