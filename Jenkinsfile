@@ -2,7 +2,7 @@ def unitStatus
 def robotStatus
 
 pipeline {
-    agent { label 'build-agent' }
+    agent { label 'vm2test' }
     environment {
         APP_NAME = "web-api"
         IMAGE_NAME = 'spdx:${BUILD_NUMBER}'
