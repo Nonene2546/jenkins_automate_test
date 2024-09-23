@@ -15,7 +15,7 @@ pipeline {
         MAIN_BRANCH = 'jenkins-pipeline-peqch-only'
 
         NAMESPACE = 'nonene2546'
-        GITHUB_CRED = credentials('ghcr-token')
+        GITHUB_CRED_PSW = credentials('ghcr-token')
         GITHUB_CRED_USR = 'nonene2546'
     }
 
