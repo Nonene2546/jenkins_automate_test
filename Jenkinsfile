@@ -5,7 +5,7 @@ pipeline {
     agent { label 'vm2test' }
     environment {
         APP_NAME = "web-api"
-        IMAGE_NAME = 'spdx:${BUILD_NUMBER}'
+        IMAGE_NAME = 'spdx'
 
         ROBOT_REPO = 'https://github.com/Nonene2546/jenkins_robot.git'
         ROBOT_BRANCH = 'main'
