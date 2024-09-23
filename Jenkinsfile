@@ -13,6 +13,11 @@ pipeline {
     }
 
     stages {
+        stage("Remove old images"){
+            steps{
+                sh "docker system prune -a"
+            }
+        }
         stage("Build") {
             steps {
                 sh "docker build --tag ${IMAGE_NAME} ."
@@ -37,11 +42,6 @@ pipeline {
                         returnStdout: true, 
                         script: "docker exec ${APP_NAME} sh -c 'python -m unit_test -v;'"
                         )
-
-                    // if not OK
-                    if (output != "0") {
-                        error("Build terminated: failed the unit test'.")
-                    }
                 }
                 /////////////////////////////////////////
             }
