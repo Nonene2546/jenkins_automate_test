@@ -16,7 +16,6 @@ pipeline {
         stage("Build") {
             steps {
                 sh "docker-compose build -d"
-                sh "docker image ls"
             }
         }
 
