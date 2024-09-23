@@ -17,7 +17,7 @@ pipeline {
             steps{
                 sh "docker stop \$(docker ps -a -q)"
                 sh "docker rm \$(docker ps -a -q)"
-                sh "docker rmi \$(docker images -q)"
+                sh "docker rmi -f \$(docker images -q)"
             }
         }
         stage("Build") {
