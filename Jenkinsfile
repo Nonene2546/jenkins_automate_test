@@ -80,7 +80,7 @@ pipeline {
         }
 
         stage("Deploy") {
-            agent { label 'deploy-server' }
+            agent { label 'preprod' }
             steps {
                 sh "docker login ghcr.io -u ${GITHUB_CRED_USR} -p ${GITHUB_CRED_PSW}"
                 sh "docker pull ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
