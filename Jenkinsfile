@@ -15,9 +15,8 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                sh "pwd"
-                sh "cp ../compose.yaml ."
-                sh "docker-compose build"
+                sh "docker build --tag ${IMAGE_NAME} ."
+                sh "docker image ls"
             }
         }
 
@@ -25,9 +24,10 @@ pipeline {
             steps {
                 ////// update and start container //////
                 script {
-                    sh(script: "docker-compose down", returnStatus: true)
+                    sh(script: "docker stop ${APP_NAME}", returnStatus: true)
+                    sh(script: "docker rm ${APP_NAME} -f", returnStatus: true)
 
-                    sh(script: "docker-compose up -d", returnStatus: true)
+                    sh(script: "docker run --name ${APP_NAME} -d -p 80:5000 ${IMAGE_NAME}")
                 }
 
                 ////// unit test running batch  //////
