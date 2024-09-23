@@ -49,16 +49,10 @@ pipeline {
             }
         }
 
-        stage("Deliver") {
+        stage("Robot Test") {
             steps {
-                sh "echo Deliver"
-            }
-        }
-
-        stage("Deploy") {
-            agent { label 'deploy-server' }
-            steps {
-                sh "echo Deploy"
+                sh "pip install -r robot/requirements.txt"
+                sh "robot robot/reports/ robot/test_suite.robot"
             }
         }
 
