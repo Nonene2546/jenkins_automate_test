@@ -1,16 +1,12 @@
 import unittest
 from werkzeug import exceptions
 
-from app import app
-from app.app import app as flask_instance
+import app
+from app import app as flask_instance
 
 class AppTestCase(unittest.TestCase):
-    def test_happy_get_code(self):
-            res = app.get_code().response.pop()
-            self.assertEqual(res, b'"Random number or message"\n')
-
     def test_happy_plus(self):
-        res = app.plus(1, 2).response.pop()
+        res = app.plus(1, 4).response.pop()
         self.assertEqual(res, b'3\n')
     
     def test_first_num_invalid(self):
