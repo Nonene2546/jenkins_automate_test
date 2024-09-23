@@ -64,6 +64,7 @@ pipeline {
 
         stage("Release") {
             steps {
+                echo "Release ${GITHUB_CRED_PSW}"
                 sh "docker tag ${IMAGE_NAME} ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
                 sh "docker tag ${IMAGE_NAME} ghcr.io/${NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"
 
