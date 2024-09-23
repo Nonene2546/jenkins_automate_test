@@ -15,6 +15,7 @@ pipeline {
     stages {
         stage("Build") {
             steps {
+                sh "cp ../docker/compose.yml ."
                 sh "docker-compose build -d"
             }
         }
