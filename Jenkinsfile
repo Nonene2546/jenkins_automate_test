@@ -15,9 +15,9 @@ pipeline {
     stages {
         stage("Remove old images/containers"){
             steps{
-                sh "docker stop $(docker ps -a -q)"
-                sh "docker rm $(docker ps -a -q)"
-                sh "docker rmi $(docker images -q)"
+                sh "docker stop \$(docker ps -a -q)"
+                sh "docker rm \$(docker ps -a -q)"
+                sh "docker rmi \$(docker images -q)"
             }
         }
         stage("Build") {
