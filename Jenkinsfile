@@ -14,7 +14,7 @@ pipeline {
         MAIN_REPO = 'https://https://github.com/CE-RELATIONSHIP/jenkins-assignment/'
         MAIN_BRANCH = 'jenkins-pipeline-peqch-only'
 
-        NAMESPACE = 'nonene2546/jenkins-automate_test'
+        NAMESPACE = 'nonene2546'
         GITHUB_CRED = credentials('ghcr-token')
         GITHUB_CRED_USR = 'nonene2546'
     }
