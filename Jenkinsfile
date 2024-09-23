@@ -6,7 +6,7 @@ pipeline {
     environment {
         APP_NAME = "web-api"
         IMAGE_NAME = 'spdx:${BUILD_NUMBER}'
-        ROBOT_REPO = 'https://github.com/CE-RELATIONSHIP/jenkins-automate-testing'
+        ROBOT_REPO = 'https://github.com/Nonene2546/jenkins_robot.git'
         ROBOT_BRANCH = 'main'
         MAIN_REPO = 'https://https://github.com/CE-RELATIONSHIP/jenkins-assignment/'
         MAIN_BRANCH = 'jenkins-pipeline-peqch-only'
@@ -48,11 +48,16 @@ pipeline {
                 /////////////////////////////////////////
             }
         }
+        stage("Clone robot repo"){
+            steps {
+                git branch: "${ROBOT_BRANCH}", url: "${ROBOT_REPO}"
+            }
+        }
 
         stage("Robot Test") {
             steps {
-                sh "pip install -r ./robot/requirements.txt"
-                sh "robot -d ./robot/reports/ ./robot/test_suite.robot"
+                sh "pip install -r requirements.txt"
+                sh "robot test_suite.robot"
             }
         }
 
