@@ -6,10 +6,17 @@ pipeline {
     environment {
         APP_NAME = "web-api"
         IMAGE_NAME = 'spdx:${BUILD_NUMBER}'
+
         ROBOT_REPO = 'https://github.com/Nonene2546/jenkins_robot.git'
         ROBOT_BRANCH = 'main'
+        ROBOT_FILE = 'unit_test.robot'
+
         MAIN_REPO = 'https://https://github.com/CE-RELATIONSHIP/jenkins-assignment/'
         MAIN_BRANCH = 'jenkins-pipeline-peqch-only'
+
+        NAMESPACE = 'Nonene2546/jenkins-automate_test'
+        GITHUB_CRED = credentials('ghcr-token')
+        GITHUB_CRED_USR = 'Nonene2546'
     }
 
     stages {
@@ -29,12 +36,10 @@ pipeline {
 
         stage("Run and Test"){
             steps {
-                ////// update and start container //////
                 script {
                     sh(script: "docker run --name ${APP_NAME} -d -p 80:5000 ${IMAGE_NAME}")
                 }
 
-                ////// unit test running batch  //////
                 script {
                     def output = sh(
                         returnStatus: true,
@@ -42,7 +47,6 @@ pipeline {
                         script: "docker exec ${APP_NAME} sh -c 'python -m unit_test -v;'"
                         )
                 }
-                /////////////////////////////////////////
             }
         }
         stage("Clone robot repo"){
@@ -54,7 +58,36 @@ pipeline {
         stage("Robot Test") {
             steps {
                 sh "pip install -r requirements.txt"
-                sh "robot test_suite.robot"
+                sh "robot ${ROBOT_FILE}"
+            }
+        }
+
+        stage("Release") {
+            steps {
+                sh "docker tag ${IMAGE_NAME} ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
+                sh "docker tag ${IMAGE_NAME} ghcr.io/${NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"
+
+                sh "docker login ghcr.io -u ${GITHUB_CRED_USR} -p ${GITHUB_CRED_PSW}"
+
+                sh "docker push ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
+                sh "docker push ghcr.io/${NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"
+
+                sh "docker inspect ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
+                sh "docker inspect ghcr.io/${NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"
+
+                sh "docker image prune -a -f"
+            }
+        }
+
+        stage("Deploy") {
+            agent { label 'deploy-server' }
+            steps {
+                sh "docker login ghcr.io -u ${GITHUB_CRED_USR} -p ${GITHUB_CRED_PSW}"
+                sh "docker pull ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
+
+                sh returnStatus: true, script: "docker stop ${APP_NAME}"
+                sh returnStatus: true, script: "docker rm ${APP_NAME} -f"
+                sh "docker run --name ${APP_NAME} -d -p 5000:5000 ghcr.io/${NAMESPACE}/${IMAGE_NAME}"
             }
         }
 
