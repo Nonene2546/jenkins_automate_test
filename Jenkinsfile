@@ -9,7 +9,7 @@ pipeline {
 
         ROBOT_REPO = 'https://github.com/Nonene2546/jenkins_robot.git'
         ROBOT_BRANCH = 'main'
-        ROBOT_FILE = 'unit_test.robot'
+        ROBOT_FILE = 'test_suite.robot'
 
         MAIN_REPO = 'https://https://github.com/CE-RELATIONSHIP/jenkins-assignment/'
         MAIN_BRANCH = 'jenkins-pipeline-peqch-only'
