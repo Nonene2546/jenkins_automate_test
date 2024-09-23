@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage("Remove old images"){
             steps{
-                sh "docker system prune -a"
+                sh "docker system prune -a -y"
             }
         }
         stage("Build") {
