@@ -51,8 +51,8 @@ pipeline {
 
         stage("Robot Test") {
             steps {
-                sh "pip install -r robot/requirements.txt"
-                sh "robot robot/reports/ robot/test_suite.robot"
+                sh "pip install -r ./robot/requirements.txt"
+                sh "robot -d ./robot/reports/ ./robot/test_suite.robot"
             }
         }
 
