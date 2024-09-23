@@ -2,7 +2,6 @@ import unittest
 from werkzeug import exceptions
 
 import app
-from app import app as flask_instance
 
 class AppTestCase(unittest.TestCase):
     def test_happy_plus(self):
@@ -22,5 +21,5 @@ class AppTestCase(unittest.TestCase):
             app.plus("2+9/5", "2+9/5")
 
 if __name__ == "__main__":
-    with flask_instance.app_context():
+    with app.app.app_context():
         unittest.main()

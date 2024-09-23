@@ -2,7 +2,6 @@ from flask import Flask, jsonify
 from werkzeug import exceptions
 
 app = Flask(__name__)
-ctx = app.app_context()
 
 class HttpMethod():
     GET = "GET"
